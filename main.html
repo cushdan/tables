@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="css/application.css" type="text/css" charset="utf-8">
+
+  <script src="lib/json2.js" type="text/javascript" charset="utf-8"></script>
+  <script src="lib/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="lib/jquery.tmpl.js" type="text/javascript" charset="utf-8"></script>
+  <script src="lib/jquery.easydrag.handler.beta2.js" type="text/javascript" charset="utf-8"></script>
+
+  <script src="lib/spine.js" type="text/javascript" charset="utf-8"></script>
+  <script src="lib/spine.model.local.js" type="text/javascript" charset="utf-8"></script>
+
+  <script src="app/models/table.js" type="text/javascript" charset="utf-8"></script>
+  <script src="app/models/guest.js" type="text/javascript" charset="utf-8"></script>
+  <script src="app/models/coordinate.js" type="text/javascript" charset="utf-8"></script>
+  <script src="app/app.js" type="text/javascript" charset="utf-8"></script>
+  <script src="app/guestController.js" type="text/javascript" charset="utf-8"></script>
+
+      <script type="text/javascript" id="taskTemplate">
+            $(document).ready(function(){
+                window.App = TableCreator.init();
+                window.App = GuestCreator.init();
+            });
+      </script>
+    <style type="text/css">
+        #newTableLand {width:200px;float:left;}
+        #newTableButton{text-align:center;height:30px;background-color:gray;}
+        .border {border: 1px solid;}
+        .guest {margin:1px 1px 1px 1px;padding-left:6px;height:20px;cursor:move;border: 1px transparent solid;}
+        .guest:hover {background-color:#ffcc00;border: 1px solid;}
+        .table {width:80px;height:80px}
+        #guestAdder{text-align:center}
+        .dropready { border: 1px solid; }
+    </style>
+
+</head>
+<body>
+these are tables, obviously
+<div id="papadiv">
+    <div id="guestContainer" style="float:left;width:200px;height:500px">
+        <div id="guestAdder">+guest</div>
+        <div id="guests">
+            <div class="guest category0" draggable="true">zero</div>
+            <div class="guest category1" draggable="true">one</div>
+            <div class="guest category2" draggable="true">two</div>
+        </div>
+    </div>
+    <div id="tables" style="float:left;padding-left:100px;padding-top:100px;width:800px;height:500px;background-color:white;">
+        <div>
+
+        </div>
+    </div>
+    <div id="newTableLand">
+        <div style="height:250px"/>
+        <div id="newTableButton" class="border">+table</div>
+        <div id="newTableHolder" class="border" style="background-color:white;height:200px">
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
