@@ -6,7 +6,6 @@
  * To change this template use File | Settings | File Templates.
  */
 jQuery(function($) {
-    var guestId = 0
     window.GuestController = Spine.Controller.create(
     {
         events:{
@@ -14,21 +13,22 @@ jQuery(function($) {
             "dragend":"dragEnd"
         },
         init: function(){
+            this.item.save();
         },
         proxied:["render","dragging","dragEnd"],
         render: function(){
-            this.el.html(this.item.name);
+            this.el.html($('#guestTemplate').tmpl(this.item));
             this.refreshElements();
             return this;
         },
         dragging:function(event) {
             var dt = event.originalEvent.dataTransfer;
-            dt.setData("Text", "Dropped in zone!");
+            dt.setData("Text", this.item.id);
             return true;
         },
         dragEnd:function(event) {
             this.App.trigger("guestDropped",this.item);
-            return false;
+            return true;
         }
     });
 
@@ -37,20 +37,19 @@ jQuery(function($) {
         events:{
             "click #guestAdder":"create"
         },
-        gc:{},
         elements:{"#guests":"guests"},
         proxied: ["associateWithController"],
         init:function(){
             Guest.bind("create",this.associateWithController);
         },
         associateWithController: function(newGuest){
-            var newGuestPlaceholder = $('<div class="guest" draggable="true"></div>');
+            var newGuestPlaceholder = $('<div/>');
             var newGuestView = GuestController.init({item:newGuest,el:newGuestPlaceholder});
             this.guests.append(newGuestView.render().el);
         },
         create:function(){
-            Guest.create({category:0,name:"new guest" + guestId});
-            guestId++;
+            var currentCategory = Category.getCurrent().index;
+            Guest.create({category:currentCategory,name:"new guest"});
         }
     });
 });
