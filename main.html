@@ -14,48 +14,69 @@
   <script src="app/models/table.js" type="text/javascript" charset="utf-8"></script>
   <script src="app/models/guest.js" type="text/javascript" charset="utf-8"></script>
   <script src="app/models/coordinate.js" type="text/javascript" charset="utf-8"></script>
-  <script src="app/app.js" type="text/javascript" charset="utf-8"></script>
+  <script src="app/models/category.js" type="text/javascript" charset="utf-8"></script>
+  <script src="app/tableController.js" type="text/javascript" charset="utf-8"></script>
   <script src="app/guestController.js" type="text/javascript" charset="utf-8"></script>
+  <script src="app/categoryController.js" type="text/javascript" charset="utf-8"></script>
 
-      <script type="text/javascript" id="taskTemplate">
+        <script type="text/javascript">
             $(document).ready(function(){
                 window.App = TableCreator.init();
                 window.App = GuestCreator.init();
+                window.App = CategoryCreator.init();
+                CategoryCreator.create();
             });
-      </script>
-    <style type="text/css">
-        #newTableLand {width:200px;float:left;}
-        #newTableButton{text-align:center;height:30px;background-color:gray;}
-        .border {border: 1px solid;}
-        .guest {margin:1px 1px 1px 1px;padding-left:6px;height:20px;cursor:move;border: 1px transparent solid;}
-        .guest:hover {background-color:#ffcc00;border: 1px solid;}
-        .table {width:80px;height:80px}
-        #guestAdder{text-align:center}
-        .dropready { border: 1px solid; }
-    </style>
-
+        </script>
+        <style type="text/css">
+            #newTableLand {width:200px;float:left;}
+            .adder {text-align:center;height:30px;background-color:gray;}
+            .border {border: 1px solid;}
+            .guest {margin:1px 1px 1px 1px;padding-left:6px;height:20px;border: 1px transparent solid;}
+            .draggable {cursor:move}
+            .category {margin:1px 1px 1px 1px;padding-left:6px;height:20px;border: 1px transparent solid;}
+            .guest:hover {background-color:#ffcc00;border: 1px solid;}
+            .table {width:80px;height:80px}
+            .dropready { border: 1px solid; }
+            #rightPanel {float:left;width:200px;background-color:white}
+            #categorySection {height:250px}
+            #guestContainer {float:left;width:200px;height:500px;background-color:white}
+            .categoryMarker {float:right;height:14px;width:20px;margin-top:2px;margin-right:3px}
+            .category0{background-color:#FF6600;}
+            .category1{background-color:#0000FF;}
+            .category2{background-color:#00FF00;}
+        </style>
+        <script type="text/x-jquery-tmpl" id="guestTemplate">
+            <div class="guest draggable" draggable="true">
+                <div style="float:left">${name}</div>
+                <div class="category${category} categoryMarker border">
+                </div>
+            </div>
+        </script>
 </head>
 <body>
 these are tables, obviously
 <div id="papadiv">
-    <div id="guestContainer" style="float:left;width:200px;height:500px">
-        <div id="guestAdder">+guest</div>
+    <div id="guestContainer" class="border">
+        <div id="guestAdder" class="adder border">+guest</div>
         <div id="guests">
-            <div class="guest category0" draggable="true">zero</div>
-            <div class="guest category1" draggable="true">one</div>
-            <div class="guest category2" draggable="true">two</div>
         </div>
     </div>
-    <div id="tables" style="float:left;padding-left:100px;padding-top:100px;width:800px;height:500px;background-color:white;">
+    <div id="tables" style="float:left;width:800px;height:500px;background-color:white;" class="border">
         <div>
-
         </div>
     </div>
-    <div id="newTableLand">
-        <div style="height:250px"/>
-        <div id="newTableButton" class="border">+table</div>
-        <div id="newTableHolder" class="border" style="background-color:white;height:200px">
-
+    <div id="rightPanel">
+        <div id="categorySection" class="border">
+            <div id="categoryAdder" class="adder border">+Categories</div>
+            <div id="categories">
+            </div>
+        </div>
+        <div id="newTableLand">
+            <div style="height:250px">
+                <div id="tableAdder" class="adder border">+table</div>
+                <div id="newTableHolder" class="border" style="background-color:white;height:216px">
+                </div>
+            </div>
         </div>
     </div>
 </div>
