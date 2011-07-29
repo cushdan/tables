@@ -13,9 +13,10 @@ jQuery(function($) {
         init: function(){
             this.item.save();
         },
-        proxied:[],
+        proxied:["render"],
         render: function(){
-            this.el.html(this.item.name);
+            this.item.reload();
+            this.el.html($('#categoryTemplate').tmpl(this.item));
             this.refreshElements();
             return this;
         }
@@ -28,21 +29,25 @@ jQuery(function($) {
             "click #categoryAdder":"create"
         },
         elements:{"#categories":"categories"},
-        proxied: ["associateWithController"],
+        proxied: ["associateWithController","renderAll"],
         init:function(){
             Category.bind("create",this.associateWithController);
+            Category.bind("newCurrentCategory",this.renderAll);
             this.create();
         },
         associateWithController: function(newCategory){
-            var newCategoryPlaceholder = $('<div class="category"></div>');
+            var newCategoryPlaceholder = $('<div/>');
             var newCategoryView = CategoryController.init({item:newCategory,el:newCategoryPlaceholder});
+            Category.setAllCurrent(newCategory);
             this.categories.append(newCategoryView.render().el);
+            this.bind("renderAll",newCategoryView.render);
         },
         create:function(){
             var newCategory = Category.create({name:"new category",color:"#000000",index:this.maxId});
-            Category.setCurrent(newCategory);
-            newCategory.save();
             this.maxId++;
+        },
+        renderAll:function(){
+            this.trigger("renderAll");
         }
     });
 

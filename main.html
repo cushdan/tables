@@ -31,16 +31,21 @@
             #newTableLand {width:200px;float:left;}
             .adder {text-align:center;height:30px;background-color:gray;}
             .border {border: 1px solid;}
-            .guest {margin:1px 1px 1px 1px;padding-left:6px;height:20px;border: 1px transparent solid;}
             .draggable {cursor:move}
-            .category {margin:1px 1px 1px 1px;padding-left:6px;height:20px;border: 1px transparent solid;}
-            .guest:hover {background-color:#ffcc00;border: 1px solid;}
-            .table {width:80px;height:80px}
+
+            .category.active{background-color: #ccffff;}
+            .guest {}
+            .modelList>div>div{margin:1px 1px 1px 1px;padding-left:6px;height:20px;border: 1px transparent solid;}
+            .modelList>div>div:hover {background-color:#ffcc00;border: 1px solid;}
+            .categoryMarker {float:right;height:14px;width:20px;margin-top:2px;margin-right:3px}
+
             .dropready { border: 1px solid; }
+            .table {width:80px;height:80px}
+
             #rightPanel {float:left;width:200px;background-color:white}
             #categorySection {height:250px}
             #guestContainer {float:left;width:200px;height:500px;background-color:white}
-            .categoryMarker {float:right;height:14px;width:20px;margin-top:2px;margin-right:3px}
+            
             .category0{background-color:#FF6600;}
             .category1{background-color:#0000FF;}
             .category2{background-color:#00FF00;}
@@ -52,13 +57,20 @@
                 </div>
             </div>
         </script>
+
+        <script type="text/x-jquery-tmpl" id="categoryTemplate">
+            <div class="category{{if current==true}} active{{/if}}">
+                <div style="float:left">${name}</div>
+                <div class="category${index} categoryMarker border">
+            </div>
+        </script>
 </head>
 <body>
 these are tables, obviously
 <div id="papadiv">
     <div id="guestContainer" class="border">
         <div id="guestAdder" class="adder border">+guest</div>
-        <div id="guests">
+        <div id="guests" class="modelList">
         </div>
     </div>
     <div id="tables" style="float:left;width:800px;height:500px;background-color:white;" class="border">
@@ -68,7 +80,7 @@ these are tables, obviously
     <div id="rightPanel">
         <div id="categorySection" class="border">
             <div id="categoryAdder" class="adder border">+Categories</div>
-            <div id="categories">
+            <div id="categories" class="modelList">
             </div>
         </div>
         <div id="newTableLand">
