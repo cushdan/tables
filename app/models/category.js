@@ -5,10 +5,13 @@
  * Time: 9:00 PM
  * To change this template use File | Settings | File Templates.
  */
-var Category = Spine.Model.setup("Category",["name","color","index"]);
+var Category = Spine.Model.setup("Category",["name","color","index","current"]);
 
 Category.include({
     setCurrent:function(value){
+        if(value)
+            this.parent.trigger("newCurrentCategory",this.id);
+        
         this.current = value;
         this.save();
     }
@@ -23,10 +26,9 @@ Category.extend({
                 cat.setCurrent(false);
             }
         }
-        category.parent.trigger("newCurrentCategory");
         return category;
     },
     getCurrent:function(){
-        return this.select(function(item){return item.current;})[0];
+        return Category.select(function(item){return item.current == true;})[0]
     }
 });

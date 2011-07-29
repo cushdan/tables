@@ -9,45 +9,63 @@
 jQuery(function($) {
     window.CategoryController = Spine.Controller.create(
     {
-        events:{},
+        events:{"click":"setAsCurrent"},
         init: function(){
+            this.item.setCurrent(true);
             this.item.save();
         },
-        proxied:["render"],
+        proxied:["render","updateCurrentCategory","setAsCurrent"],
         render: function(){
             this.item.reload();
             this.el.html($('#categoryTemplate').tmpl(this.item));
             this.refreshElements();
             return this;
+        },
+        updateCurrentCategory:function(newCurrentId){
+            if(this.item.id === newCurrentId)
+                return;
+
+            this.item.setCurrent(false);
+            this.item.save();
+            this.render();
+        },
+        setAsCurrent:function(){
+            this.item.setCurrent(true);
+            this.render();
         }
+
     });
 
     window.CategoryCreator = Spine.Controller.create({
         maxId:0,
         el:$("#categorySection"),
+
         events:{
             "click #categoryAdder":"create"
         },
         elements:{"#categories":"categories"},
-        proxied: ["associateWithController","renderAll"],
+        proxied: ["associateWithController","updateAllCategories"],
         init:function(){
             Category.bind("create",this.associateWithController);
-            Category.bind("newCurrentCategory",this.renderAll);
+            Category.bind("newCurrentCategory",this.updateAllCategories);
             this.create();
         },
         associateWithController: function(newCategory){
             var newCategoryPlaceholder = $('<div/>');
             var newCategoryView = CategoryController.init({item:newCategory,el:newCategoryPlaceholder});
-            Category.setAllCurrent(newCategory);
             this.categories.append(newCategoryView.render().el);
-            this.bind("renderAll",newCategoryView.render);
+            this.bind("updateCurrentCategories",newCategoryView.updateCurrentCategory);
         },
         create:function(){
             var newCategory = Category.create({name:"new category",color:"#000000",index:this.maxId});
             this.maxId++;
         },
-        renderAll:function(){
-            this.trigger("renderAll");
+        updateAllCategories:function(newCurrentId){
+            this.currentId = newCurrentId;
+            this.trigger("updateCurrentCategories",newCurrentId)
+        },
+        getCurrent:function(){
+            return Category.find(currentId);
         }
     });
 
