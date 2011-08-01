@@ -42,6 +42,7 @@ jQuery(function($) {
             this.item.color = this.colorInput.val();
             this.item.save();
             this.render();
+            this.item.trigger("colorChanged");
         }
 
     });

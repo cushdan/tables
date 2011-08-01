@@ -13,9 +13,10 @@ jQuery(function($) {
             "dragend":"dragEnd"
         },
         init: function(){
+            this.item.category.bind("colorChanged",this.colorChanged);
             this.item.save();
         },
-        proxied:["render","dragging","dragEnd"],
+        proxied:["render","dragging","dragEnd","colorChanged"],
         render: function(){
             this.el.html($('#guestTemplate').tmpl(this.item));
             this.refreshElements();
@@ -29,6 +30,10 @@ jQuery(function($) {
         dragEnd:function(event) {
             this.App.trigger("guestDropped",this.item);
             return true;
+        },
+        colorChanged:function(){
+            this.item.category.reload();
+            this.render();
         }
     });
 
