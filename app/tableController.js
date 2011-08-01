@@ -60,9 +60,9 @@ jQuery(function($) {
             var renderedTotal = 0;
 
             for(var prop in sections){
-                var sectionCount = sections[prop];
-                renderedTotal += sectionCount;
-                startDegree = this._renderSection(myDrawing,startDegree,this.item.max,sectionCount,this.colors[colorIndex]);
+                var section = sections[prop];
+                renderedTotal += section.count;
+                startDegree = this._renderSection(myDrawing,startDegree,this.item.max,section.count,section.color);
                 colorIndex++;
             }
             if(renderedTotal < this.item.max){

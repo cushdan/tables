@@ -2,11 +2,13 @@
 <html>
 <head>
   <link rel="stylesheet" href="css/application.css" type="text/css" charset="utf-8">
+  <link rel="stylesheet" href="css/colorPicker.css" type="text/css" charset="utf-8">
 
   <script src="lib/json2.js" type="text/javascript" charset="utf-8"></script>
   <script src="lib/jquery.js" type="text/javascript" charset="utf-8"></script>
   <script src="lib/jquery.tmpl.js" type="text/javascript" charset="utf-8"></script>
   <script src="lib/jquery.easydrag.handler.beta2.js" type="text/javascript" charset="utf-8"></script>
+  <script src="lib/jquery.colorPicker.js" type="text/javascript" charset="utf-8"></script>
 
   <script src="lib/spine.js" type="text/javascript" charset="utf-8"></script>
   <script src="lib/spine.model.local.js" type="text/javascript" charset="utf-8"></script>
@@ -53,7 +55,7 @@
         <script type="text/x-jquery-tmpl" id="guestTemplate">
             <div class="guest draggable" draggable="true">
                 <div style="float:left">${name}</div>
-                <div class="category${category} categoryMarker border">
+                <div class="categoryMarker border" style="background-color:${category.color}">
                 </div>
             </div>
         </script>
@@ -61,7 +63,8 @@
         <script type="text/x-jquery-tmpl" id="categoryTemplate">
             <div class="category{{if current==true}} active{{/if}}">
                 <div style="float:left">${name}</div>
-                <div class="category${index} categoryMarker border">
+                <div class="category${index} categoryMarker border" style="background-color:${color}">
+                <input class="colorPicker" type="text" value="${color}"/>
             </div>
         </script>
 </head>

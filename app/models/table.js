@@ -13,10 +13,12 @@ Table.include({
     var sections = {};
     for(var index in this.tableGuests){
         var guest = this.tableGuests[index];
-        if(sections[guest.category]){
-            sections[guest.category] = sections[guest.category] + 1;
+        if(sections[guest.category.index]){
+            sections[guest.category.index].count = sections[guest.category.index].count + 1;
         } else {
-            sections[guest.category] = 1;
+            sections[guest.category.index] = {};
+            sections[guest.category.index].count = 1;
+            sections[guest.category.index].color = guest.category.color;
         }
     }
     return sections;

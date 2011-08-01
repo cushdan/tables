@@ -48,7 +48,7 @@ jQuery(function($) {
             this.guests.append(newGuestView.render().el);
         },
         create:function(){
-            var currentCategory = Category.getCurrent().index;
+            var currentCategory = Category.getCurrent();
             Guest.create({category:currentCategory,name:"new guest"});
         }
     });

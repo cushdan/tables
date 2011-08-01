@@ -9,15 +9,20 @@
 jQuery(function($) {
     window.CategoryController = Spine.Controller.create(
     {
-        events:{"click":"setAsCurrent"},
+        elements:{".colorPicker":"colorInput"},
+        events:{
+            //"click":"setAsCurrent",
+            "change .colorPicker":"colorChanged"
+        },
         init: function(){
             this.item.setCurrent(true);
             this.item.save();
         },
-        proxied:["render","updateCurrentCategory","setAsCurrent"],
+        proxied:["render","updateCurrentCategory","setAsCurrent","colorChanged"],
         render: function(){
             this.item.reload();
             this.el.html($('#categoryTemplate').tmpl(this.item));
+            this.el.find(".colorPicker").colorPicker();
             this.refreshElements();
             return this;
         },
@@ -31,6 +36,11 @@ jQuery(function($) {
         },
         setAsCurrent:function(){
             this.item.setCurrent(true);
+            this.render();
+        },
+        colorChanged:function(){
+            this.item.color = this.colorInput.val();
+            this.item.save();
             this.render();
         }
 
@@ -54,6 +64,7 @@ jQuery(function($) {
             var newCategoryPlaceholder = $('<div/>');
             var newCategoryView = CategoryController.init({item:newCategory,el:newCategoryPlaceholder});
             this.categories.append(newCategoryView.render().el);
+            
             this.bind("updateCurrentCategories",newCategoryView.updateCurrentCategory);
         },
         create:function(){
