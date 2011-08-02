@@ -18,16 +18,6 @@ Category.include({
 })
 
 Category.extend({
-    setAllCurrent:function(category){
-        category.setCurrent(true);
-        for(var record in this.records){
-            var cat = this.records[record];
-            if(cat.id != category.id){
-                cat.setCurrent(false);
-            }
-        }
-        return category;
-    },
     getCurrent:function(){
         return Category.select(function(item){return item.current == true;})[0]
     }

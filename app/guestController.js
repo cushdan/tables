@@ -32,8 +32,10 @@ jQuery(function($) {
             return true;
         },
         colorChanged:function(){
+            this.item.reload();
             this.item.category.reload();
             this.render();
+            this.item.parentTable.parent.trigger("update");
         }
     });
 

@@ -19,7 +19,6 @@ jQuery(function($) {
         init: function(){
             this.el.easydrag();
             this.item.bind("update",this.render);
-
             //this.App.bind("guestDropped",this.guestAdded);
         },
         dragover:function(){return false;},

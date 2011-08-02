@@ -11,7 +11,7 @@ jQuery(function($) {
     {
         elements:{".colorPicker":"colorInput"},
         events:{
-            //"click":"setAsCurrent",
+            "click":"setAsCurrent",
             "change .colorPicker":"colorChanged"
         },
         init: function(){
@@ -42,7 +42,7 @@ jQuery(function($) {
             this.item.color = this.colorInput.val();
             this.item.save();
             this.render();
-            this.item.trigger("colorChanged");
+            this.item.trigger("colorChanged",this.item);
         }
 
     });

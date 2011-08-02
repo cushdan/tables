@@ -29,7 +29,7 @@ Table.include({
   },
   removeGuest:function(guestToRemove){
       this.tableGuests = $.grep(this.tableGuests,function(tableGuest){return tableGuest.id != guestToRemove.id});
-      this.save()
+      this.save();
       this.parent.trigger("update");
   }
 });
