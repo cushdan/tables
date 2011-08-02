@@ -28,14 +28,16 @@ jQuery(function($) {
             return true;
         },
         dragEnd:function(event) {
-            this.App.trigger("guestDropped",this.item);
             return true;
         },
         colorChanged:function(){
             this.item.reload();
             this.item.category.reload();
             this.render();
-            this.item.parentTable.parent.trigger("update");
+            var parentTable = this.item.parentTable;
+            if(parentTable){
+                parentTable.trigger("update",parentTable);
+            }
         }
     });
 

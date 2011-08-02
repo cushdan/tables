@@ -26,8 +26,8 @@ jQuery(function($) {
             this.refreshElements();
             return this;
         },
-        updateCurrentCategory:function(newCurrentId){
-            if(this.item.id === newCurrentId)
+        updateCurrentCategory:function(newCurrent){
+            if(this.item === newCurrent)
                 return;
 
             this.item.setCurrent(false);
@@ -69,15 +69,11 @@ jQuery(function($) {
             this.bind("updateCurrentCategories",newCategoryView.updateCurrentCategory);
         },
         create:function(){
-            var newCategory = Category.create({name:"new category",color:"#000000",index:this.maxId});
+            Category.create({name:"new category",color:"#000000",index:this.maxId});
             this.maxId++;
         },
-        updateAllCategories:function(newCurrentId){
-            this.currentId = newCurrentId;
-            this.trigger("updateCurrentCategories",newCurrentId)
-        },
-        getCurrent:function(){
-            return Category.find(currentId);
+        updateAllCategories:function(newCurrent){
+            this.trigger("updateCurrentCategories",newCurrent)
         }
     });
 

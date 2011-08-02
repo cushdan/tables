@@ -31,7 +31,7 @@
         </script>
         <style type="text/css">
             #newTableLand {width:200px;float:left;}
-            .adder {text-align:center;height:30px;background-color:gray;}
+            .adder {text-align:center;height:30px;background-color:gray;cursor:pointer}
             .border {border: 1px solid;}
             .draggable {cursor:move}
 
@@ -54,7 +54,7 @@
         </style>
         <script type="text/x-jquery-tmpl" id="guestTemplate">
             <div class="guest draggable" draggable="true">
-                <div style="float:left">${name}</div>
+                <div style="float:left;cursor:text">${name}</div>
                 <div class="categoryMarker border" style="background-color:${category.color}">
                 </div>
             </div>

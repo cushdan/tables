@@ -10,7 +10,7 @@ var Category = Spine.Model.setup("Category",["name","color","index","current"]);
 Category.include({
     setCurrent:function(value){
         if(value)
-            this.parent.trigger("newCurrentCategory",this.id);
+            this.trigger("newCurrentCategory",this);
         
         this.current = value;
         this.save();

@@ -25,11 +25,11 @@ Table.include({
   },
   addGuest:function(guest){
       this.tableGuests.push(guest);
-      this.parent.trigger("update");
+      this.trigger("update",this);
   },
   removeGuest:function(guestToRemove){
       this.tableGuests = $.grep(this.tableGuests,function(tableGuest){return tableGuest.id != guestToRemove.id});
       this.save();
-      this.parent.trigger("update");
+      this.trigger("update",this);
   }
 });
