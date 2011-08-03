@@ -13,8 +13,7 @@ jQuery(function($) {
             "dragend":"dragEnd"
         },
         init: function(){
-            this.item.category.bind("colorChanged",this.colorChanged);
-            this.item.save();
+            this.onNewCategory();
         },
         proxied:["render","dragging","dragEnd","colorChanged","updateCategory"],
         render: function(){
@@ -31,9 +30,13 @@ jQuery(function($) {
         dragEnd:function(event) {
             return true;
         },
-        colorChanged:function(){
+        colorChanged:function(changedCategory){
             this.item.reload();
             this.item.category.reload();
+            if(this.item.category.id != changedCategory.id){
+                return;
+            }
+            
             this.render();
             var parentTable = this.item.parentTable;
             if(parentTable){
@@ -43,8 +46,12 @@ jQuery(function($) {
         updateCategory:function(event){
             var newId = $(event.currentTarget).attr("categoryid");
             this.item.category = Category.find(newId);
+            this.onNewCategory();
+            this.colorChanged(this.item.category);
+        },
+        onNewCategory:function(){
+            this.item.category.bind("colorChanged",this.colorChanged);
             this.item.save();
-            this.render();
         }
     });
 
