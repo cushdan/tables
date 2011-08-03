@@ -48,10 +48,10 @@
             #rightPanel {float:left;width:200px;background-color:white}
             #categorySection {height:250px}
             #guestContainer {float:left;width:200px;height:500px;background-color:white}
-            .categoryPicker{z-index:100;width:200px;background-color:#f5f5f5;border-radius:5px;position:absolute;}
+            .categoryPicker{z-index:100;width:200px;background-color:#f5f5f5;border-radius:5px;position:absolute;top:0px;left:0px}
         </style>
         <script type="text/x-jquery-tmpl" id="guestTemplate">
-            <div class="guest draggable"><!-- draggable="true">-->
+            <div class="guest draggable" draggable="true">
                 <div style="float:left;cursor:text">${name}</div>
                 <div class="categoryMarker border" style="background-color:${category.color}">
                 </div>

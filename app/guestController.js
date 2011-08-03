@@ -16,10 +16,10 @@ jQuery(function($) {
             this.item.category.bind("colorChanged",this.colorChanged);
             this.item.save();
         },
-        proxied:["render","dragging","dragEnd","colorChanged"],
+        proxied:["render","dragging","dragEnd","colorChanged","updateCategory"],
         render: function(){
             this.el.html($('#guestTemplate').tmpl(this.item));
-            this.el.find('.categoryMarker').categoryPicker();
+            this.el.find('.categoryMarker').categoryPicker(this.updateCategory);
             this.refreshElements();
             return this;
         },
@@ -39,6 +39,12 @@ jQuery(function($) {
             if(parentTable){
                 parentTable.trigger("update",parentTable);
             }
+        },
+        updateCategory:function(event){
+            var newId = $(event.currentTarget).attr("categoryid");
+            this.item.category = Category.find(newId);
+            this.item.save();
+            this.render();
         }
     });
 

@@ -20,5 +20,8 @@ Category.include({
 Category.extend({
     getCurrent:function(){
         return Category.select(function(item){return item.current == true;})[0]
+    },
+    isColorUsed:function(color){
+        return Category.select(function(item){return item.color === ('#' + color);}).length > 0
     }
 });

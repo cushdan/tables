@@ -55,7 +55,7 @@ jQuery(function($) {
             "click #categoryAdder":"create"
         },
         elements:{"#categories":"categories"},
-        proxied: ["associateWithController","updateAllCategories"],
+        proxied: ["associateWithController","updateAllCategories","getUnusedColor"],
         init:function(){
             Category.bind("create",this.associateWithController);
             Category.bind("newCurrentCategory",this.updateAllCategories);
@@ -69,11 +69,18 @@ jQuery(function($) {
             this.bind("updateCurrentCategories",newCategoryView.updateCurrentCategory);
         },
         create:function(){
-            Category.create({name:"new category",color:"#000000",index:this.maxId});
+            var unusedColor = "#" + this.getUnusedColor();
+            Category.create({name:"new category",color:unusedColor,index:this.maxId});
             this.maxId++;
         },
         updateAllCategories:function(newCurrent){
             this.trigger("updateCurrentCategories",newCurrent)
+        },
+        getUnusedColor:function(){
+            var allColors = $('<div/>').colorPicker.defaultColors;
+            return $.grep(allColors,function(color){
+                        return !Category.isColorUsed(color);
+                    })[0];
         }
     });
 
