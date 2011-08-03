@@ -7,10 +7,22 @@
  */
 (function($){
     $.fn.categoryPicker = function(){
-
-      };
-
-    buildPicker = function(element){
-        $('<div class="colorPicker"></div>')
+        createPicker(this);
     };
+
+    var picker;
+    createPicker = function(element){
+        picker = $('<div class="categoryPicker modelList"></div>');
+        element.bind('click',createCategories);
+        element.append(picker);
+    };
+    var markup = '<div><div style="float:left;">${name}</div><div class="categoryMarker" style="background-color:${color}"></div></div>'
+    $.template("categoryRowTemplate", markup );
+    createCategories = function(){
+        var categories = $('<div/>')
+        $.each(Category.records,function(){
+            categories.append($.tmpl("categoryRowTemplate",this));
+        });
+        picker.html(categories);
+    }
 })(jQuery)

@@ -19,6 +19,7 @@ jQuery(function($) {
         proxied:["render","dragging","dragEnd","colorChanged"],
         render: function(){
             this.el.html($('#guestTemplate').tmpl(this.item));
+            this.el.find('.categoryMarker').categoryPicker();
             this.refreshElements();
             return this;
         },
