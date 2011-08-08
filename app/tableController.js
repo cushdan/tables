@@ -7,7 +7,7 @@
 jQuery(function($) {
 
     window.TableController = Spine.Controller.create(
-    {   colors:["#FF6600","#0000FF","#00FF00"],
+    {
         events:{
                     "dragenter":"highlightOnDrag",
                     "dragleave":"unhighlight",
@@ -17,7 +17,7 @@ jQuery(function($) {
         proxied:["render","mouseupEvent","highlightOnDrag","guestAdded","dropReceived"],
 
         init: function(){
-            this.el.easydrag();
+            this.el.easydrag().ondrop(this.resetZindex);
             this.item.bind("update",this.render);
         },
         dragover:function(){return false;},
@@ -98,6 +98,9 @@ jQuery(function($) {
             var arcStartY = (Math.sin(startDegree)*radius)+circleCenter.y;
             canv.arc(circleCenter.x,circleCenter.y,radius,startDegree,endDegree,false);
             canv.lineTo(circleCenter.x,circleCenter.y);
+        },
+        resetZindex:function(event,element){
+            $(element).css("z-index",0);
         }
     });
 
@@ -120,15 +123,4 @@ jQuery(function($) {
             Table.create({max:10,tableGuests:[]});
         }
     });
-
-//    var newTable = Table.create({max:10,guests:[
-//                                                {category:0},
-//                                                {category:0},
-//                                                {category:0},
-//                                                {category:1},
-//                                                {category:1},
-//                                                {category:2},
-//                                                {category:2}
-//                                                ]});
-//    var view = TableController.init({item:newTable});
 });
