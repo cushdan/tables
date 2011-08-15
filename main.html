@@ -54,6 +54,7 @@
             .guest {}
             .modelList>div>div{margin:1px 1px 1px 1px;padding-left:6px;height:20px;border: 1px transparent solid;}
             .modelList>div>div:hover {background-color:#ffcc00;border: 1px solid;}
+            .modelList>.guestEdit>div:hover {background-color:white;border: 1px transparent solid;}
             .categoryMarker {float:right;height:14px;width:20px;margin-top:2px;margin-right:3px}
 
             .dropready { border: 1px solid; }
@@ -63,10 +64,16 @@
             #categorySection {height:250px}
             #guestContainer {float:left;width:200px;height:500px;background-color:white}
             .categoryPicker{z-index:100;width:200px;background-color:#f5f5f5;border-radius:5px;position:absolute;top:0px;left:0px}
+            .arrow{left:-30px;position:absolute;z-index:100;float:left;width: 0;height: 0;border-top: 10px solid transparent;border-right: 30px solid #f5f5f5;border-bottom: 10px solid transparent;}
+            .guestEdit .guestName {display:none}
+            .guestEdit .guestNameInput {display:block}
+            .guestNameInput {float:left;height:16px;width:100px;display:none}
+            
         </style>
         <script type="text/x-jquery-tmpl" id="guestTemplate">
             <div class="guest draggable" draggable="true">
-                <div style="float:left;cursor:text">${name}</div>
+                <div class="guestName" style="float:left;cursor:text">${name}</div>
+                <form><input class="guestNameInput" type="text" value="${name}"/></form>
                 <div class="categoryMarker border" style="background-color:${category.color}">
                 </div>
             </div>
@@ -87,6 +94,7 @@ these are tables, obviously
         <div id="guestAdder" class="adder border">+guest</div>
         <div id="guests" class="modelList">
         </div>
+        <div id="tableGuestLists"></div>
     </div>
     <div id="tables" style="float:left;width:800px;height:500px;background-color:white;" class="border">
         <div>

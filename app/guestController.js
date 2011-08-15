@@ -10,12 +10,15 @@ jQuery(function($) {
     {
         events:{
             "dragstart":"dragging",
-            "dragend":"dragEnd"
+            "dragend":"dragEnd",
+            "dblclick":"edit",
+            "submit form":"saveName",
+            "blur input":"saveName"
         },
         init: function(){
             this.onNewCategory();
         },
-        proxied:["render","dragging","dragEnd","colorChanged","updateCategory"],
+        proxied:["render","dragging","dragEnd","colorChanged","updateCategory","edit","saveName"],
         render: function(){
             this.el.html($('#guestTemplate').tmpl(this.item));
             this.el.find('.categoryMarker').categoryPicker(this.updateCategory);
@@ -52,6 +55,21 @@ jQuery(function($) {
         onNewCategory:function(){
             this.item.category.bind("colorChanged",this.colorChanged);
             this.item.save();
+        },
+        edit:function(){
+            this.toggleEdit();
+            this.el.find('input').focus();
+        },
+        toggleEdit:function(){
+            this.el.toggleClass("guestEdit");
+        },
+        saveName:function(){
+            var newName = this.el.find('input').val();
+            this.item.name = newName;
+            this.item.save();
+            this.toggleEdit();
+            this.render();
+            return false;
         }
     });
 

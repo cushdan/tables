@@ -37,13 +37,17 @@
             categories.append($.tmpl("categoryRowTemplate",this));
         });
         picker.html(categories);
+        var arrow = $('<div class="arrow"></div>');
+        picker.prepend(arrow);
         
         picker.find('.categoryOption').click(function(event){
             onSelect(event);
             destroyBlocker();
         });
 
-        var yOffset = Math.max(event.pageY - categoryCount * 20 / 2,10);
+        var centerOffset = categoryCount * 20 / 2;
+        var yOffset = Math.max(event.pageY - centerOffset,10);
+        arrow.css({"top":centerOffset-10});
         picker.css({ "left":(event.pageX + 30)+"px", "top":yOffset+"px"});
         picker.show();
         var blocker = $('<div id="blocker" style="width:120%;height:3000px;position:absolute;top:0px;left:0px;z-index:99;opacity:0.8;background-color:black"></div>');

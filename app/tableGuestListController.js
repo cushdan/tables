@@ -16,22 +16,29 @@ jQuery(function($) {
         init: function(){
         },
         render: function(){
+            this.el = $('<div class="tableGuestList"></div>');
+            for(var guest in this.item.table.tableGuests){
+
+            }
+            
         }
     });
 
     window.TableGuestListCreator = Spine.Controller.create({
-        el:$(""),
+        el:$("#tableGuestLists"),
         events:{},
         elements:{},
         proxied: ["associateWithController"],
         init:function(){
-            TableGuestList.bind("create",this.associateWithController);
+            //TableCreator.bind("newTable",this.create);
+            //TableGuestList.bind("create",this.associateWithController);
         },
         associateWithController: function(newTableGuestList){
-
+            var newTableGuestListController = TableGuestListController.create({item:newTableGuestList});
+            this.el.append(newTableGuestListController.render().el);
         },
-        create:function(){
-            TableGuestList.create();
+        create:function(table){
+            TableGuestList.create({table:table});
         }
     });
 });
