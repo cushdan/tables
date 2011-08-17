@@ -8,20 +8,19 @@
 jQuery(function($) {
     window.GuestController = Spine.Controller.create(
     {
+        elements:{"input":"nameInput",".guestName":"guestName"},
         events:{
             "dragstart":"dragging",
-            "dragend":"dragEnd",
-            "dblclick":"edit",
-            "submit form":"saveName",
-            "blur input":"saveName"
+            "dragend":"dragEnd"
         },
         init: function(){
             this.onNewCategory();
         },
-        proxied:["render","dragging","dragEnd","colorChanged","updateCategory","edit","saveName"],
+        proxied:["render","dragging","dragEnd","colorChanged","updateCategory","edit","saveName","nameEdit"],
         render: function(){
             this.el.html($('#guestTemplate').tmpl(this.item));
             this.el.find('.categoryMarker').categoryPicker(this.updateCategory);
+            this.el.find('.guestName').divEditor(this.nameEdit);
             this.refreshElements();
             return this;
         },
@@ -56,20 +55,9 @@ jQuery(function($) {
             this.item.category.bind("colorChanged",this.colorChanged);
             this.item.save();
         },
-        edit:function(){
-            this.toggleEdit();
-            this.el.find('input').focus();
-        },
-        toggleEdit:function(){
-            this.el.toggleClass("guestEdit");
-        },
-        saveName:function(){
-            var newName = this.el.find('input').val();
-            this.item.name = newName;
+        nameEdit:function(newValue){
+            this.item.name = newValue;
             this.item.save();
-            this.toggleEdit();
-            this.render();
-            return false;
         }
     });
 

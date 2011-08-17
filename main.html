@@ -17,6 +17,7 @@
   <script src="app/models/coordinate.js" type="text/javascript" charset="utf-8"></script>
   <script src="app/models/category.js" type="text/javascript" charset="utf-8"></script>
   <script src="app/helpers/categoryPicker.js" type="text/javascript" charset="utf-8"></script>
+  <script src="app/helpers/divEditor.js" type="text/javascript" charset="utf-8"></script>
   <script src="app/tableController.js" type="text/javascript" charset="utf-8"></script>
   <script src="app/guestController.js" type="text/javascript" charset="utf-8"></script>
   <script src="app/categoryController.js" type="text/javascript" charset="utf-8"></script>
@@ -65,15 +66,11 @@
             #guestContainer {float:left;width:200px;height:500px;background-color:white}
             .categoryPicker{z-index:100;width:200px;background-color:#f5f5f5;border-radius:5px;position:absolute;top:0px;left:0px}
             .arrow{left:-30px;position:absolute;z-index:100;float:left;width: 0;height: 0;border-top: 10px solid transparent;border-right: 30px solid #f5f5f5;border-bottom: 10px solid transparent;}
-            .guestEdit .guestName {display:none}
-            .guestEdit .guestNameInput {display:block}
-            .guestNameInput {float:left;height:16px;width:100px;display:none}
             
         </style>
         <script type="text/x-jquery-tmpl" id="guestTemplate">
             <div class="guest draggable" draggable="true">
                 <div class="guestName" style="float:left;cursor:text">${name}</div>
-                <form><input class="guestNameInput" type="text" value="${name}"/></form>
                 <div class="categoryMarker border" style="background-color:${category.color}">
                 </div>
             </div>
