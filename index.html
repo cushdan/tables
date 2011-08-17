@@ -1,77 +1,116 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset='utf-8'>
+  <link rel="stylesheet" href="css/colorPicker.css" type="text/css" charset="utf-8">
 
-  <title>cushdan/tables @ GitHub</title>
+  <script src="lib/json2.js" type="text/javascript" charset="utf-8"></script>
+  <script src="lib/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="lib/jquery.tmpl.js" type="text/javascript" charset="utf-8"></script>
+  <script src="lib/jquery.easydrag.handler.beta2.js" type="text/javascript" charset="utf-8"></script>
+  <script src="lib/jquery.colorPicker.js" type="text/javascript" charset="utf-8"></script>
 
-  <style type="text/css">
-    body {
-      margin-top: 1.0em;
-      background-color: #05c211;
-      font-family: Helvetica, Arial, FreeSans, san-serif;
-      color: #ffffff;
-    }
-    #container {
-      margin: 0 auto;
-      width: 700px;
-    }
-    h1 { font-size: 3.8em; color: #fa3dee; margin-bottom: 3px; }
-    h1 .small { font-size: 0.4em; }
-    h1 a { text-decoration: none }
-    h2 { font-size: 1.5em; color: #fa3dee; }
-    h3 { text-align: center; color: #fa3dee; }
-    a { color: #fa3dee; }
-    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
-    .download { float: right; }
-    pre { background: #000; color: #fff; padding: 15px;}
-    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
-    .footer { text-align:center; padding-top:30px; font-style: italic; }
-  </style>
+  <script src="lib/spine.js" type="text/javascript" charset="utf-8"></script>
+  <script src="lib/spine.model.local.js" type="text/javascript" charset="utf-8"></script>
+
+  <script src="app/models/table.js" type="text/javascript" charset="utf-8"></script>
+  <script src="app/models/guest.js" type="text/javascript" charset="utf-8"></script>
+  <script src="app/models/coordinate.js" type="text/javascript" charset="utf-8"></script>
+  <script src="app/models/category.js" type="text/javascript" charset="utf-8"></script>
+  <script src="app/helpers/categoryPicker.js" type="text/javascript" charset="utf-8"></script>
+  <script src="app/helpers/divEditor.js" type="text/javascript" charset="utf-8"></script>
+  <script src="app/tableController.js" type="text/javascript" charset="utf-8"></script>
+  <script src="app/guestController.js" type="text/javascript" charset="utf-8"></script>
+  <script src="app/categoryController.js" type="text/javascript" charset="utf-8"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function(){
+                window.App = TableCreator.init();
+                window.App = GuestCreator.init();
+                window.App = CategoryCreator.init();
+                CategoryCreator.create();
+            });
+        </script>
+    
+        <style type="text/css">
+
+            html, body {
+                margin: 0;
+                padding: 0;
+            }
+
+            body {
+                font-family: "Helvetica Neue", helvetica, arial, sans-serif;
+                font-size: 14px;
+                line-height: 1.4em;
+                background: #eeeeee;
+                color: #333333;
+            }
+
+            #newTableLand {width:200px;float:left;}
+            .adder {text-align:center;height:30px;background-color:gray;cursor:pointer}
+            .border {border: 1px solid;}
+            .draggable {cursor:move}
+
+            .category.active{background-color: #ccffff;}
+            .guest {}
+            .modelList>div>div{margin:1px 1px 1px 1px;padding-left:6px;height:20px;border: 1px transparent solid;}
+            .modelList>div>div:hover {background-color:#ffcc00;border: 1px solid;}
+            .modelList>.guestEdit>div:hover {background-color:white;border: 1px transparent solid;}
+            .categoryMarker {float:right;height:14px;width:20px;margin-top:2px;margin-right:3px}
+
+            .dropready { border: 1px solid; }
+            .table {width:80px;height:80px}
+
+            #rightPanel {float:left;width:200px;background-color:white}
+            #categorySection {height:250px}
+            #guestContainer {float:left;width:200px;height:500px;background-color:white}
+            .categoryPicker{z-index:100;width:200px;background-color:#f5f5f5;border-radius:5px;position:absolute;top:0px;left:0px}
+            .arrow{left:-30px;position:absolute;z-index:100;float:left;width: 0;height: 0;border-top: 10px solid transparent;border-right: 30px solid #f5f5f5;border-bottom: 10px solid transparent;}
+            
+        </style>
+        <script type="text/x-jquery-tmpl" id="guestTemplate">
+            <div class="guest draggable" draggable="true">
+                <div class="guestName" style="float:left;cursor:text">${name}</div>
+                <div class="categoryMarker border" style="background-color:${category.color}">
+                </div>
+            </div>
+        </script>
+
+        <script type="text/x-jquery-tmpl" id="categoryTemplate">
+            <div class="category{{if current==true}} active{{/if}}">
+                <div class="categoryName" style="float:left">${name}</div>
+                <div class="category${index} categoryMarker border" style="background-color:${color}">
+                <input class="colorPicker" type="text" value="${color}"/>
+            </div>
+        </script>
 </head>
-
 <body>
-  <a href="http://github.com/cushdan/tables"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
-
-  <div id="container">
-
-    <div class="download">
-      <a href="http://github.com/cushdan/tables/zipball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
-      <a href="http://github.com/cushdan/tables/tarball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
+these are tables, obviously
+<div id="papadiv">
+    <div id="guestContainer" class="border">
+        <div id="guestAdder" class="adder border">+guest</div>
+        <div id="guests" class="modelList">
+        </div>
+        <div id="tableGuestLists"></div>
     </div>
-
-    <h1><a href="http://github.com/cushdan/tables">tables</a>
-      <span class="small">by <a href="http://github.com/cushdan">cushdan</a></span></h1>
-
-    <div class="description">
-      wedding table planner (html5 required)
+    <div id="tables" style="float:left;width:800px;height:500px;background-color:white;" class="border">
+        <div>
+        </div>
     </div>
-
-    <h2>Authors</h2>
-<p>cushdan (cushdan@gmail.com)<br/><br/>      </p>
-<h2>Contact</h2>
-<p> (cushdan@gmail.com)<br/>      </p>
-
-
-    <h2>Download</h2>
-    <p>
-      You can download this project in either
-      <a href="http://github.com/cushdan/tables/zipball/master">zip</a> or
-      <a href="http://github.com/cushdan/tables/tarball/master">tar</a> formats.
-    </p>
-    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-      by running:
-      <pre>$ git clone git://github.com/cushdan/tables</pre>
-    </p>
-
-    <div class="footer">
-      get the source code on GitHub : <a href="http://github.com/cushdan/tables">cushdan/tables</a>
+    <div id="rightPanel">
+        <div id="categorySection" class="border">
+            <div id="categoryAdder" class="adder border">+Categories</div>
+            <div id="categories" class="modelList">
+            </div>
+        </div>
+        <div id="newTableLand">
+            <div style="height:250px">
+                <div id="tableAdder" class="adder border">+table</div>
+                <div id="newTableHolder" class="border" style="background-color:white;height:216px">
+                </div>
+            </div>
+        </div>
     </div>
-
-  </div>
-
-  
+</div>
 </body>
 </html>
