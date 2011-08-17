@@ -18,11 +18,12 @@ jQuery(function($) {
             this.item.setCurrent(true);
             this.item.save();
         },
-        proxied:["render","updateCurrentCategory","setAsCurrent","colorChanged"],
+        proxied:["render","updateCurrentCategory","setAsCurrent","colorChanged","nameEdit"],
         render: function(){
             this.item.reload();
             this.el.html($('#categoryTemplate').tmpl(this.item));
             this.el.find(".colorPicker").colorPicker();
+            this.el.find(".categoryName").divEditor(this.nameEdit);
             this.refreshElements();
             return this;
         },
@@ -43,6 +44,10 @@ jQuery(function($) {
             this.item.save();
             this.render();
             this.item.trigger("colorChanged",this.item);
+        },
+        nameEdit:function(newValue){
+            this.item.name = newValue;
+            this.item.save();
         }
 
     });

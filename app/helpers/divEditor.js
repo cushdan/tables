@@ -29,8 +29,10 @@
             element.hide();
             editor.show();
             input.focus();
+            return false;
         });
         editor.hover(function(){return false;});
+        element.click(function(){return false;});
 
         element.after(editor);
     };
